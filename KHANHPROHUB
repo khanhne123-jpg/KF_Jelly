@@ -1,0 +1,124 @@
+local BananaLib = loadstring(game:HttpGet("https://githubusercontent.com"))()
+local Window = BananaLib:CreateWindow({
+    Name = "🔥 KHÁNH PRO HUB - BANANA EDITION 🔥",
+    Theme = "DarkYellow", -- Tông màu vàng đen của chuối
+    Link = "://pastebin.com"
+})
+
+local MainTab = Window:CreateTab({ Name = "Cày Cấp Tự Động", Icon = "rbxassetid://4483345998" })
+local TeleportTab = Window:CreateTab({ Name = "Dịch Chuyển Đảo", Icon = "rbxassetid://4483345998" })
+local CombatTab = Window:CreateTab({ Name = "Săn Bounty PvP", Icon = "rbxassetid://4483345998" })
+local FruitTab = Window:CreateTab({ Name = "Nhặt Trái Ác Quỷ", Icon = "rbxassetid://4483345998" })
+
+MainTab:CreateButton({
+    Name = "📜 Tác giả: Hoàng Ngọc Khánh",
+    Callback = function()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "BANANA KHÁNH PRO HUB";
+            Text = "Cảm ơn bạn đã tin dùng script!";
+            Duration = 5;
+        })
+    end
+})
+
+_G.AutoFarm = false
+MainTab:CreateToggle({
+    Name = "Bật Auto Farm (By Khanh)",
+    Default = false,
+    Callback = function(state)
+        _G.AutoFarm = state
+        while _G.AutoFarm do
+            task.wait(0.1)
+            pcall(function()
+                if _G.AutoFarm then
+                end
+            end)
+        end
+    end
+})
+
+_G.FastAttack = false
+MainTab:CreateToggle({
+    Name = "⚡ Đánh Siêu Tốc Không Cooldown",
+    Default = false,
+    Callback = function(state)
+        _G.FastAttack = state
+        local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+        local CameraShaker = require(game:GetService("ReplicatedStorage").Util.CameraShaker)
+        CameraShaker:Stop()
+        
+        while _G.FastAttack do
+            task.wait()
+            pcall(function()
+                CombatFramework.activeController.hitboxMagnitude = 55
+            end)
+        end
+    end
+})
+
+TeleportTab:CreateButton({
+    Name = "Dịch chuyển sang Sea 1",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
+    end
+})
+
+TeleportTab:CreateButton({
+    Name = "Dịch chuyển sang Sea 2",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
+    end
+})
+
+TeleportTab:CreateButton({
+    Name = "Dịch chuyển sang Sea 3",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
+    end
+})
+
+_G.AutoSniperFruit = false
+FruitTab:CreateToggle({
+    Name = "Tự Động Gom Trái Trên Map",
+    Default = false,
+    Callback = function(state)
+        _G.AutoSniperFruit = state
+        while _G.AutoSniperFruit do
+            task.wait(1)
+            for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v:IsA("Tool") and string.find(v.Name, "Fruit") then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame
+                end
+            end
+        end
+    end
+})
+
+FruitTab:CreateButton({
+    Name = "Tự Động Mua Trái (Từ Hảo Hán)",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
+    end
+})
+
+_G.AimbotSkill = false
+CombatTab:CreateToggle({
+    Name = "Tự Động Định Vị Chiêu (Aimbot)",
+    Default = false,
+    Callback = function(state)
+        _G.AimbotSkill = state
+    end
+})
+
+CombatTab:CreateButton({
+    Name = "Bật Định Vị Người Chơi (Player ESP)",
+    Callback = function()
+        for _, player in pairs(game.Players:GetChildren()) do
+            if player ~= game.Players.LocalPlayer and player.Character and not player.Character:FindFirstChild("ESP") then
+                local ESP = Instance.new("Highlight", player.Character)
+                ESP.Name = "ESP"
+                ESP.FillColor = Color3.fromRGB(255, 255, 0) -- Đổi sang màu vàng cho hợp với chuối
+            end
+        end
+    end
+})
