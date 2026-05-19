@@ -17,7 +17,7 @@ FarmSection:NewButton("📜 Tác giả: Hoàng Ngọc Khánh", "Script được 
 end)
 
 _G.AutoFarm = false
-FarmSection:NewToggle("Bật Auto Farm (By Tuan)", "Tự động cày cấp siêu tốc", function(state)
+FarmSection:NewToggle("Bật Auto Farm (By Khanh)", "Tự động cày cấp siêu tốc", function(state)
     _G.AutoFarm = state
     while _G.AutoFarm do
         task.wait(0.1)
