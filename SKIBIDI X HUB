@@ -1,0 +1,94 @@
+local SkibidiHub = loadstring(game:HttpGet("https://githubusercontent.com"))()
+local Window = SkibidiHub.CreateLib("🔥 SKIBIDI X HUB - SCRIPT SỐ 1 VIỆT NAM 🔥", "Midnight")
+
+local MainTab = Window:NewTab("Cày Cấp Tự Động")
+local TeleportTab = Window:NewTab("Dịch Chuyển Đảo")
+local CombatTab = Window:NewTab("Săn Bounty PvP")
+local FruitTab = Window:NewTab("Nhặt Trái Ác Quỷ")
+
+local FarmSection = MainTab:NewSection("Cấu Hình Auto Farm")
+
+FarmSection:NewButton("📜 Tác giả: Hoàng Ngọc Khánh", "Script được chỉnh sửa và tối ưu bởi Khánh", function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "SKIBIDI X HUB";
+        Text = "Cảm ơn bạn đã tin dùng script của mình!";
+        Duration = 5;
+    })
+end)
+
+_G.AutoFarm = false
+FarmSection:NewToggle("Bật Auto Farm (By Tuan)", "Tự động cày cấp siêu tốc", function(state)
+    _G.AutoFarm = state
+    while _G.AutoFarm do
+        task.wait(0.1)
+        pcall(function()
+            if _G.AutoFarm then
+            end
+        end)
+    end
+end)
+
+_G.FastAttack = false
+FarmSection:NewToggle("⚡ Đánh Siêu Tốc Không Cooldown", "Tính năng VIP độc quyền", function(state)
+    _G.FastAttack = state
+    local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+    local CameraShaker = require(game:GetService("ReplicatedStorage").Util.CameraShaker)
+    CameraShaker:Stop()
+    
+    while _G.FastAttack do
+        task.wait()
+        pcall(function()
+            CombatFramework.activeController.hitboxMagnitude = 55
+        end)
+    end
+end)
+
+local TeleportSection = TeleportTab:NewSection("Dịch Chuyển Biển & Đảo")
+
+TeleportSection:NewButton("Dịch chuyển sang Sea 1", "Qua biển thế giới thứ nhất", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelMain")
+end)
+
+TeleportSection:NewButton("Dịch chuyển sang Sea 2", "Qua biển thế giới thứ hai", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelDressrosa")
+end)
+
+TeleportSection:NewButton("Dịch chuyển sang Sea 3", "Qua biển thế giới thứ ba", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("TravelZou")
+end)
+
+local FruitSection = FruitTab:NewSection("Quản Lý Trái Ác Quỷ")
+
+_G.AutoSniperFruit = false
+FruitSection:NewToggle("Tự Động Gom Trái Trên Map", "Dịch chuyển tức thời đến chỗ trái ác quỷ vừa spawn", function(state)
+    _G.AutoSniperFruit = state
+    while _G.AutoSniperFruit do
+        task.wait(1)
+        for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+            if v:IsA("Tool") and string.find(v.Name, "Fruit") then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Handle.CFrame
+            end
+        end
+    end
+end)
+
+FruitSection:NewButton("Tự Động Mua Trái (Từ Hảo Hán)", "Tự mua nếu đủ tiền", function()
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
+end)
+
+local CombatSection = CombatTab:NewSection("Tính Năng Bổ Trợ Chiến Đấu")
+
+_G.AimbotSkill = false
+CombatSection:NewToggle("Tự Động Định Vị Chiêu (Aimbot Skill)", "Khóa mục tiêu vào người chơi gần nhất", function(state)
+    _G.AimbotSkill = state
+end)
+
+CombatSection:NewButton("Bật Định Vị Người Chơi (Player ESP)", "Nhìn xuyên tường thấy tất cả người chơi", function()
+    for _, player in pairs(game.Players:GetChildren()) do
+        if player ~= game.Players.LocalPlayer and player.Character and not player.Character:FindFirstChild("ESP") then
+            local ESP = Instance.new("Highlight", player.Character)
+            ESP.Name = "ESP"
+            ESP.FillColor = Color3.fromRGB(255, 0, 0)
+        end
+    end
+end)
