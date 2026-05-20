@@ -1,0 +1,74 @@
+-- Initialize Kavo UI Library
+local KavoLibrary = loadstring(game:HttpGet("https://githubusercontent.com"))()
+
+-- Create Main Window with Skibidi X Hub name and BloodTheme (Red/Black) style
+local Window = KavoLibrary.CreateLib("🚽 Skibidi X Hub | Full Features", "BloodTheme")
+
+-- ================= MAIN TABS =================
+
+local TabMain = Window:NewTab("🔥 Main Features")
+local TabCombat = Window:NewTab("⚔️ Combat")
+local TabMisc = Window:NewTab("⚙️ System")
+
+-- ================= SECTIONS =================
+
+local SectionMain = TabMain:NewSection("Main Features")
+local SectionCombat = TabCombat:NewSection("Combat Settings")
+local SectionMisc = TabMisc:NewSection("System Settings")
+
+-- ================= 1. MAIN TAB FEATURES =================
+
+-- Information label
+SectionMain:NewLabel("Welcome to Skibidi X Hub Full Features!")
+
+-- Click Button
+SectionMain:NewButton("Enable Auto Farm (Click Mode)", "Activates click-based farming", function()
+    -- Code logic goes here
+    print("Auto Farm Activated!")
+end)
+
+-- Toggle Switch
+SectionMain:NewToggle("Auto Bring Mob", "Brings all enemies to your location", function(Value)
+    _G.BringMob = Value
+    while _G.BringMob do
+        task.wait(1)
+        print("Bringing mobs...")
+    end
+end)
+
+-- Value Slider
+SectionMain:NewSlider("WalkSpeed", "Changes player movement speed", 500, 16, function(Value)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
+end)
+
+-- ================= 2. COMBAT TAB FEATURES =================
+
+-- Dropdown Selection
+SectionCombat:NewDropdown("Select Weapon", "Choose your primary weapon", {"Sword", "Gun", "Fruit", "Melee"}, function(Option)
+    print("Weapon selected: " .. tostring(Option))
+end)
+
+-- Text Input Box
+SectionCombat:NewTextBox("Search Player Name", "Enter target player name", function(Text)
+    print("Searching for player: " .. Text)
+end)
+
+-- ================= 3. SYSTEM TAB FEATURES =================
+
+-- Keybind to hide/show menu
+SectionMisc:NewKeybind("Toggle Menu Keybind", "Press key to hide/show UI", Enum.KeyCode.RightControl, function()
+    KavoLibrary:ToggleUI()
+end)
+
+-- Destroy UI Button
+SectionMisc:NewButton("🔴 Destroy UI (Remove Script)", "Completely closes the menu", function()
+    local uiName = "🚽 Skibidi X Hub | Full Features"
+    local coreGui = game:GetService("CoreGui")
+    local playerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+    
+    if coreGui:FindFirstChild(uiName) then
+        coreGui[uiName]:Destroy()
+    elseif playerGui:FindFirstChild(uiName) then
+        playerGui[uiName]:Destroy()
+    end
+end)
